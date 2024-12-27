@@ -1,1 +1,4 @@
 GET http://localhost:8080/healthy
+
+###
+GET http://localhost:8080/api/v1/product/list
