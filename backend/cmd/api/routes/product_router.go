@@ -4,14 +4,14 @@ import (
 	"database/sql"
 
 	"github.com/Alym62/crud-korp/cmd/api/controllers"
-	"github.com/Alym62/crud-korp/internal/repository"
+	"github.com/Alym62/crud-korp/internal/repositories"
 	"github.com/Alym62/crud-korp/internal/usecases"
 	"github.com/gin-gonic/gin"
 )
 
 func ProductRouter(router *gin.Engine, dbConnection *sql.DB) {
 
-	productRepository := repository.NewProductRepository(dbConnection)
+	productRepository := repositories.NewProductRepository(dbConnection)
 
 	productUseCase := usecases.NewProductUseCase(productRepository)
 

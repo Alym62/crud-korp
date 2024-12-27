@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -19,4 +20,8 @@ func FetchIdParamAndConvert(ctx *gin.Context) (uint, error) {
 	}
 
 	return uint(idConverter), nil
+}
+
+func GetEnvironments(key string) string {
+	return os.Getenv(key)
 }

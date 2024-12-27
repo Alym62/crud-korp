@@ -2,14 +2,14 @@ package usecases
 
 import (
 	"github.com/Alym62/crud-korp/internal/models"
-	"github.com/Alym62/crud-korp/internal/repository"
+	"github.com/Alym62/crud-korp/internal/repositories"
 )
 
 type ProductUseCase struct {
-	repository repository.ProductRepository
+	repository repositories.ProductRepository
 }
 
-func NewProductUseCase(repository repository.ProductRepository) ProductUseCase {
+func NewProductUseCase(repository repositories.ProductRepository) ProductUseCase {
 	return ProductUseCase{
 		repository: repository,
 	}
