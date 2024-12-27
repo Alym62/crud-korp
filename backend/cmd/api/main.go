@@ -14,10 +14,14 @@ import (
 )
 
 func loadEnv() {
-	err := godotenv.Load("../../.env")
-	if err != nil {
-		fmt.Println("Não foi possível carregar o arquivo .env")
-		return
+	env := os.Getenv("APP_PRODUCTION")
+	if env != "true" {
+		err := godotenv.Load("../../.env")
+		if err != nil {
+			fmt.Println("Não foi possível carregar o arquivo .env")
+		} else {
+			fmt.Println("Arquivo .env carregado com sucesso")
+		}
 	}
 }
 
@@ -27,18 +31,18 @@ func main() {
 	// @TODO: Database connection and configuration for production
 	var dbConnection *sql.DB
 
-	port, err := utils.ConverterStrToInt(os.Getenv("PORT"))
+	port, err := utils.ConverterStrToInt(os.Getenv("DB_PORT"))
 	if err != nil {
 		panic("Is not possible converter int")
 	}
 
 	appProduction := os.Getenv("APP_PRODUCTION")
-	if appProduction == "false" {
+	if appProduction != "" {
 		conn, err := db.ConnectDB(db.ConfigConnectionDB{
-			Host:     os.Getenv("HOST"),
+			Host:     os.Getenv("DB_HOST"),
 			Port:     port,
-			User:     os.Getenv("USER_DB"),
-			Password: os.Getenv("PASSWORD_DB"),
+			User:     os.Getenv("DB_USER"),
+			Password: os.Getenv("DB_PASSWORD"),
 			DBName:   os.Getenv("DB_NAME"),
 		})
 
