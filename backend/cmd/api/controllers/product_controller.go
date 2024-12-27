@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/Alym62/crud-korp/internal/dto"
 	"github.com/Alym62/crud-korp/internal/usecases"
@@ -18,8 +19,8 @@ func NewProductController(useCase usecases.ProductUseCase) productController {
 	}
 }
 
-func (p *productController) GetProducts(ctx *gin.Context) {
-	products, err := p.productUseCase.GetProducts()
+func (p *productController) GetList(ctx *gin.Context) {
+	products, err := p.productUseCase.GetList()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
@@ -53,5 +54,47 @@ func (p *productController) Create(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, gin.H{
 		"success": true,
 		"data":    result,
+	})
+}
+
+func (p *productController) GetById(ctx *gin.Context) {
+	idParam := ctx.Param("id")
+	if idParam == "" {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"error":   "Id is not null or blank",
+		})
+		return
+	}
+
+	idConverter, err := strconv.Atoi(idParam)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"error":   "Id of product nedded a number",
+		})
+		return
+	}
+
+	product, err := p.productUseCase.GetById(uint(idConverter))
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if product == nil {
+		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+			"success": false,
+			"error":   "Product is not found",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"data":    product,
 	})
 }

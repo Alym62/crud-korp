@@ -17,7 +17,7 @@ func NewProductRepository(connection *sql.DB) ProductRepository {
 	}
 }
 
-func (pr *ProductRepository) GetProducts() ([]models.Product, error) {
+func (pr *ProductRepository) GetList() ([]models.Product, error) {
 	query := "SELECT id, name, description, price, created_at, updated_at, removed FROM product"
 	rows, err := pr.connection.Query(query)
 
@@ -60,7 +60,6 @@ func (pr *ProductRepository) Create(product *models.Product) (models.Product, er
 		"VALUES($1, $2, $3, $4, $5, $6) RETURNING id, name, description, price, created_at, updated_at, removed")
 
 	if err != nil {
-		fmt.Println(err)
 		return models.Product{}, err
 	}
 
@@ -81,11 +80,44 @@ func (pr *ProductRepository) Create(product *models.Product) (models.Product, er
 		&p.Removed,
 	)
 	if err != nil {
-		fmt.Println(err)
 		return models.Product{}, err
 	}
 
 	query.Close()
 
 	return p, nil
+}
+
+func (pr *ProductRepository) GetById(id uint) (*models.Product, error) {
+	var p models.Product
+
+	query, err := pr.connection.Prepare(
+		"SELECT id, name, description, price, created_at, updated_at, removed FROM product " +
+			"WHERE removed = false AND id = $1")
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = query.QueryRow(id).Scan(
+		&p.ID,
+		&p.Name,
+		&p.Description,
+		&p.Price,
+		&p.CreatedAt,
+		&p.UpdatedAt,
+		&p.Removed,
+	)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+
+		return nil, err
+	}
+
+	query.Close()
+
+	return &p, nil
 }

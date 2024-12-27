@@ -12,3 +12,6 @@ Content-Type: application/json
     "description": "Notebook para testes aqui",
     "price": 3500
 }
+
+###
+GET http://localhost:8080/api/v1/product/1

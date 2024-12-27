@@ -15,8 +15,8 @@ func NewProductUseCase(repository repository.ProductRepository) ProductUseCase {
 	}
 }
 
-func (pu *ProductUseCase) GetProducts() ([]models.Product, error) {
-	return pu.repository.GetProducts()
+func (pu *ProductUseCase) GetList() ([]models.Product, error) {
+	return pu.repository.GetList()
 }
 
 func (pu *ProductUseCase) Create(name string, description string, price float64) (models.Product, error) {
@@ -26,4 +26,8 @@ func (pu *ProductUseCase) Create(name string, description string, price float64)
 	}
 
 	return pu.repository.Create(product)
+}
+
+func (pu *ProductUseCase) GetById(id uint) (*models.Product, error) {
+	return pu.repository.GetById(id)
 }

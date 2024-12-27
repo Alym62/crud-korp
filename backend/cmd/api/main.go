@@ -31,7 +31,8 @@ func main() {
 	productController := controllers.NewProductController(productUseCase)
 
 	v1 := router.Group("/api/v1/product")
-	v1.GET("/list", productController.GetProducts)
+	v1.GET("/list", productController.GetList)
+	v1.GET("/:id", productController.GetById)
 	v1.POST("/create", productController.Create)
 	v1.PUT("/update")
 	v1.DELETE("/delete")
