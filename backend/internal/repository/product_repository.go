@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	"github.com/Alym62/crud-korp/internal/models"
 )
@@ -18,7 +19,7 @@ func NewProductRepository(connection *sql.DB) ProductRepository {
 }
 
 func (pr *ProductRepository) GetList() ([]models.Product, error) {
-	query := "SELECT id, name, description, price, created_at, updated_at, removed FROM product"
+	query := "SELECT id, name, description, price, created_at, updated_at, removed FROM product WHERE removed = false"
 	rows, err := pr.connection.Query(query)
 
 	if err != nil {
@@ -100,6 +101,40 @@ func (pr *ProductRepository) GetById(id uint) (*models.Product, error) {
 	}
 
 	err = query.QueryRow(id).Scan(
+		&p.ID,
+		&p.Name,
+		&p.Description,
+		&p.Price,
+		&p.CreatedAt,
+		&p.UpdatedAt,
+		&p.Removed,
+	)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+
+		return nil, err
+	}
+
+	query.Close()
+
+	return &p, nil
+}
+
+func (pr *ProductRepository) DeleteById(id uint) (*models.Product, error) {
+	var p models.Product
+
+	query, err := pr.connection.Prepare(
+		"UPDATE product SET removed = true, updated_at = $1 " +
+			"WHERE id = $2 RETURNING id, name, description, price, created_at, updated_at, removed")
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = query.QueryRow(time.Now(), id).Scan(
 		&p.ID,
 		&p.Name,
 		&p.Description,

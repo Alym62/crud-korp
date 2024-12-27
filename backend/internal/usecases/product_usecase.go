@@ -31,3 +31,7 @@ func (pu *ProductUseCase) Create(name string, description string, price float64)
 func (pu *ProductUseCase) GetById(id uint) (*models.Product, error) {
 	return pu.repository.GetById(id)
 }
+
+func (pu *ProductUseCase) DeleteById(id uint) (*models.Product, error) {
+	return pu.repository.DeleteById(id)
+}

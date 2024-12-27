@@ -4,6 +4,9 @@ GET http://localhost:8080/healthy
 GET http://localhost:8080/api/v1/product/list
 
 ###
+GET http://localhost:8080/api/v1/product/1
+
+###
 POST http://localhost:8080/api/v1/product/create
 Content-Type: application/json
 
@@ -14,4 +17,4 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/api/v1/product/1
+DELETE http://localhost:8080/api/v1/product/delete/3
