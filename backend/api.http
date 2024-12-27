@@ -2,3 +2,14 @@ GET http://localhost:8080/healthy
 
 ###
 GET http://localhost:8080/api/v1/product/list
+
+###
+POST http://localhost:8080/api/v1/product/create
+Content-Type: application/json
+
+{
+    "name": "Ps4",
+    "description": "Playstation 4 com 2 controles",
+    "price": 2000,
+    "removed": false
+}

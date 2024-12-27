@@ -31,6 +31,9 @@ func main() {
 
 	v1 := router.Group("/api/v1/product")
 	v1.GET("/list", productController.GetProducts)
+	v1.POST("/create", productController.Create)
+	v1.PUT("/update")
+	v1.DELETE("/delete")
 
 	router.Run(":8080")
 }
