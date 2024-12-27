@@ -29,7 +29,7 @@ func ConnectDB() (*sql.DB, error) {
 		panic(err)
 	}
 
-	fmt.Println("Connectd to " + dbname)
+	fmt.Println("Connected to " + dbname)
 
 	return db, nil
 }

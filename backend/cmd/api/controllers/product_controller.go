@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Alym62/crud-korp/internal/models"
+	"github.com/Alym62/crud-korp/internal/dto"
 	"github.com/Alym62/crud-korp/internal/usecases"
 	"github.com/gin-gonic/gin"
 )
@@ -32,17 +32,21 @@ func (p *productController) GetProducts(ctx *gin.Context) {
 }
 
 func (p *productController) Create(ctx *gin.Context) {
-	var product models.Product
-	err := ctx.BindJSON(&product)
-
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, err)
+	var dto dto.CreateProductDto
+	if err := ctx.ShouldBindJSON(&dto); err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"error":   err.Error(),
+		})
 		return
 	}
 
-	result, err := p.productUseCase.Create(product)
+	result, err := p.productUseCase.Create(dto.Name, dto.Description, dto.Price)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"error":   err.Error(),
+		})
 		return
 	}
 

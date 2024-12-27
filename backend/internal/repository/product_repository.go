@@ -3,7 +3,6 @@ package repository
 import (
 	"database/sql"
 	"fmt"
-	"time"
 
 	"github.com/Alym62/crud-korp/internal/models"
 )
@@ -54,11 +53,8 @@ func (pr *ProductRepository) GetProducts() ([]models.Product, error) {
 	return productList, nil
 }
 
-func (pr *ProductRepository) Create(product models.Product) (models.Product, error) {
+func (pr *ProductRepository) Create(product *models.Product) (models.Product, error) {
 	var p models.Product
-	product.CreatedAt = time.Now()
-	product.UpdatedAt = time.Now()
-	product.Removed = false
 
 	query, err := pr.connection.Prepare("INSERT INTO product (name, description, price, created_at, updated_at, removed)" +
 		"VALUES($1, $2, $3, $4, $5, $6) RETURNING id, name, description, price, created_at, updated_at, removed")
@@ -68,14 +64,22 @@ func (pr *ProductRepository) Create(product models.Product) (models.Product, err
 		return models.Product{}, err
 	}
 
-	err = query.QueryRow(product.Name, product.Description, product.Price, product.CreatedAt, product.UpdatedAt, product.Removed).Scan(
+	err = query.QueryRow(
+		product.Name,
+		product.Description,
+		product.Price,
+		product.CreatedAt,
+		product.UpdatedAt,
+		product.Removed,
+	).Scan(
 		&p.ID,
 		&p.Name,
 		&p.Description,
 		&p.Price,
 		&p.CreatedAt,
 		&p.UpdatedAt,
-		&p.Removed)
+		&p.Removed,
+	)
 	if err != nil {
 		fmt.Println(err)
 		return models.Product{}, err

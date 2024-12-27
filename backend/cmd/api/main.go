@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Alym62/crud-korp/cmd/api/controllers"
@@ -20,7 +21,7 @@ func main() {
 
 	dbConnection, err := db.ConnectDB()
 	if err != nil {
-		panic(err)
+		fmt.Println("error connection database", err)
 	}
 
 	productRepository := repository.NewProductRepository(dbConnection)
