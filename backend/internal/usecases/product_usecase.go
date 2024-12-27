@@ -19,6 +19,10 @@ func (pu *ProductUseCase) GetList() ([]models.Product, error) {
 	return pu.repository.GetList()
 }
 
+func (pu *ProductUseCase) GetById(id uint) (*models.Product, error) {
+	return pu.repository.GetById(id)
+}
+
 func (pu *ProductUseCase) Create(name string, description string, price float64) (models.Product, error) {
 	product, err := models.NewProduct(name, description, price)
 	if err != nil {
@@ -28,10 +32,15 @@ func (pu *ProductUseCase) Create(name string, description string, price float64)
 	return pu.repository.Create(product)
 }
 
-func (pu *ProductUseCase) GetById(id uint) (*models.Product, error) {
-	return pu.repository.GetById(id)
-}
-
 func (pu *ProductUseCase) DeleteById(id uint) (*models.Product, error) {
 	return pu.repository.DeleteById(id)
+}
+
+func (pu *ProductUseCase) Update(id uint, name string, description string, price float64) (*models.Product, error) {
+	product, err := models.NewProduct(name, description, price)
+	if err != nil {
+		return nil, err
+	}
+
+	return pu.repository.Update(id, product)
 }

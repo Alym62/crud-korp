@@ -122,3 +122,46 @@ func (p *productController) DeleteById(ctx *gin.Context) {
 		"data":    product,
 	})
 }
+
+func (p *productController) Update(ctx *gin.Context) {
+	var dto dto.CreateProductDto
+
+	if err := ctx.ShouldBindJSON(&dto); err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	id, err := utils.FetchIdParamAndConvert(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	product, err := p.productUseCase.Update(id, dto.Name, dto.Description, dto.Price)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"success": false,
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if product == nil {
+		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+			"success": false,
+			"error":   "Product is not found",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"data":    product,
+	})
+}

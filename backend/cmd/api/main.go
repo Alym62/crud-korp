@@ -34,7 +34,7 @@ func main() {
 	v1.GET("/list", productController.GetList)
 	v1.GET("/:id", productController.GetById)
 	v1.POST("/create", productController.Create)
-	v1.PUT("/update")
+	v1.PUT("/update/:id", productController.Update)
 	v1.DELETE("/delete/:id", productController.DeleteById)
 
 	router.Run(":8080")

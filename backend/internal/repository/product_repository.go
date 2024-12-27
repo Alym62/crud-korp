@@ -156,3 +156,37 @@ func (pr *ProductRepository) DeleteById(id uint) (*models.Product, error) {
 
 	return &p, nil
 }
+
+func (pr *ProductRepository) Update(id uint, product *models.Product) (*models.Product, error) {
+	var p models.Product
+
+	query, err := pr.connection.Prepare(
+		"UPDATE product SET name = $1, description = $2, price = $3, updated_at = $4 " +
+			"WHERE removed = false AND id = $5 RETURNING id, name, description, price, created_at, updated_at, removed")
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = query.QueryRow(product.Name, product.Description, product.Price, time.Now(), id).Scan(
+		&p.ID,
+		&p.Name,
+		&p.Description,
+		&p.Price,
+		&p.CreatedAt,
+		&p.UpdatedAt,
+		&p.Removed,
+	)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+
+		return nil, err
+	}
+
+	query.Close()
+
+	return &p, nil
+}
