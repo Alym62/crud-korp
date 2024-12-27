@@ -24,7 +24,7 @@ func loadEnv() {
 func main() {
 	loadEnv()
 
-	// @TODO: Database connection
+	// @TODO: Database connection and configuration for production
 	var dbConnection *sql.DB
 
 	port, err := utils.ConverterStrToInt(os.Getenv("PORT"))
