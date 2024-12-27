@@ -2,7 +2,6 @@ package utils
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -22,6 +21,11 @@ func FetchIdParamAndConvert(ctx *gin.Context) (uint, error) {
 	return uint(idConverter), nil
 }
 
-func GetEnvironments(key string) string {
-	return os.Getenv(key)
+func ConverterStrToInt(arg string) (int, error) {
+	integer, err := strconv.Atoi(arg)
+	if err != nil {
+		return 0, fmt.Errorf("Is not possible converter string to int")
+	}
+
+	return integer, nil
 }

@@ -7,17 +7,17 @@ import (
 	_ "github.com/lib/pq"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "1234"
-	dbname   = "postgres"
-)
+type ConfigConnectionDB struct {
+	Host     string
+	Port     int
+	User     string
+	Password string
+	DBName   string
+}
 
-func ConnectDB() (*sql.DB, error) {
+func ConnectDB(configConnection ConfigConnectionDB) (*sql.DB, error) {
 	strConn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
+		configConnection.Host, configConnection.Port, configConnection.User, configConnection.Password, configConnection.DBName)
 
 	db, err := sql.Open("postgres", strConn)
 	if err != nil {
@@ -29,7 +29,7 @@ func ConnectDB() (*sql.DB, error) {
 		panic(err)
 	}
 
-	fmt.Println("Connected to " + dbname)
+	fmt.Println("Connected to " + configConnection.DBName)
 
 	return db, nil
 }
