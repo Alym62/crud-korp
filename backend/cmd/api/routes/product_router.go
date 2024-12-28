@@ -18,6 +18,7 @@ func ProductRouter(router *gin.Engine, dbConnection *sql.DB) {
 	productController := controllers.NewProductController(productUseCase)
 
 	v1 := router.Group("/api/v1/product")
+	v1.GET("/pager", productController.GetAllByPage)
 	v1.GET("/list", productController.GetList)
 	v1.GET("/:id", productController.GetById)
 	v1.POST("/create", productController.Create)

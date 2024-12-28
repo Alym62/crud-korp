@@ -19,6 +19,37 @@ func NewProductController(useCase usecases.ProductUseCase) productController {
 	}
 }
 
+func (p *productController) GetAllByPage(ctx *gin.Context) {
+	page, err := utils.ConverterStrToInt(ctx.DefaultQuery("page", "1"))
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	limit, err := utils.ConverterStrToInt(ctx.DefaultQuery("limit", "1"))
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	pageResponse, err := p.productUseCase.GetAllByPage(page, limit)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"data":    pageResponse,
+	})
+}
+
 func (p *productController) GetList(ctx *gin.Context) {
 	products, err := p.productUseCase.GetList()
 	if err != nil {

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/Alym62/crud-korp/internal/models"
+	"github.com/Alym62/crud-korp/pkg"
 )
 
 type ProductRepository struct {
@@ -16,6 +17,66 @@ func NewProductRepository(connection *sql.DB) ProductRepository {
 	return ProductRepository{
 		connection: connection,
 	}
+}
+
+func (pr *ProductRepository) GetAllByPage(page int, limit int) (pkg.PageResponse[models.Product], error) {
+	if page < 1 {
+		page = 1
+	}
+
+	offset := (page - 1) * limit
+
+	query := "SELECT id, name, description, price, created_at, updated_at, removed FROM product " +
+		"WHERE removed = false ORDER BY created_at DESC LIMIT $1 OFFSET $2"
+	rows, err := pr.connection.Query(query, limit, offset)
+
+	if err != nil {
+		fmt.Println(err)
+		return pkg.PageResponse[models.Product]{}, err
+	}
+
+	var productList []models.Product
+	var product models.Product
+
+	for rows.Next() {
+		err = rows.Scan(
+			&product.ID,
+			&product.Name,
+			&product.Description,
+			&product.Price,
+			&product.CreatedAt,
+			&product.UpdatedAt,
+			&product.Removed,
+		)
+
+		if err != nil {
+			fmt.Println(err)
+			return pkg.PageResponse[models.Product]{}, err
+		}
+
+		productList = append(productList, product)
+	}
+	rows.Close()
+
+	var total int
+
+	countQuery := "SELECT COUNT(*) FROM product WHERE removed = false"
+
+	err = pr.connection.QueryRow(countQuery).Scan(&total)
+	if err != nil {
+		fmt.Println(err)
+		return pkg.PageResponse[models.Product]{}, err
+	}
+
+	totalPages := (total + limit - 1) / limit
+
+	return pkg.PageResponse[models.Product]{
+		Data:       productList,
+		Total:      total,
+		Page:       page,
+		Limit:      limit,
+		TotalPages: totalPages,
+	}, nil
 }
 
 func (pr *ProductRepository) GetList() ([]models.Product, error) {
