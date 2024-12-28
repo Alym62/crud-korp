@@ -9,36 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type productController struct {
-	productUseCase usecases.ProductUseCase
+type userController struct {
+	userUseCase usecases.UserUseCase
 }
 
-func NewProductController(useCase usecases.ProductUseCase) productController {
-	return productController{
-		productUseCase: useCase,
+func NewUserController(useCase usecases.UserUseCase) userController {
+	return userController{
+		userUseCase: useCase,
 	}
 }
 
-func (p *productController) GetAllByPage(ctx *gin.Context) {
-	page, err := utils.ConverterStrToInt(ctx.DefaultQuery("page", "1"))
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"success": false,
-			"error":   err.Error(),
-		})
-		return
-	}
-
-	limit, err := utils.ConverterStrToInt(ctx.DefaultQuery("limit", "1"))
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"success": false,
-			"error":   err.Error(),
-		})
-		return
-	}
-
-	pageResponse, err := p.productUseCase.GetAllByPage(page, limit)
+func (u *userController) GetList(ctx *gin.Context) {
+	users, err := u.userUseCase.GetList()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
@@ -46,25 +28,12 @@ func (p *productController) GetAllByPage(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
-		"data":    pageResponse,
+		"data":    users,
 	})
 }
 
-func (p *productController) GetList(ctx *gin.Context) {
-	products, err := p.productUseCase.GetList()
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
-		return
-	}
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"success": true,
-		"data":    products,
-	})
-}
-
-func (p *productController) Create(ctx *gin.Context) {
-	var dto dto.CreateProductDto
+func (u *userController) Create(ctx *gin.Context) {
+	var dto dto.CreateUserDto
 	if err := ctx.ShouldBindJSON(&dto); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
@@ -73,7 +42,7 @@ func (p *productController) Create(ctx *gin.Context) {
 		return
 	}
 
-	result, err := p.productUseCase.Create(dto.Name, dto.Description, dto.Price)
+	result, err := u.userUseCase.Create(dto.Username, dto.Password, dto.Position, dto.Role)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"success": false,
@@ -88,7 +57,7 @@ func (p *productController) Create(ctx *gin.Context) {
 	})
 }
 
-func (p *productController) GetById(ctx *gin.Context) {
+func (u *userController) GetById(ctx *gin.Context) {
 	id, err := utils.FetchIdParamAndConvert(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -98,7 +67,7 @@ func (p *productController) GetById(ctx *gin.Context) {
 		return
 	}
 
-	product, err := p.productUseCase.GetById(id)
+	user, err := u.userUseCase.GetById(id)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"success": false,
@@ -107,21 +76,21 @@ func (p *productController) GetById(ctx *gin.Context) {
 		return
 	}
 
-	if product == nil {
+	if user == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "Product is not found",
+			"error":   "User is not found",
 		})
 		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
-		"data":    product,
+		"data":    user,
 	})
 }
 
-func (p *productController) DeleteById(ctx *gin.Context) {
+func (u *userController) DeleteById(ctx *gin.Context) {
 	id, err := utils.FetchIdParamAndConvert(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -131,7 +100,7 @@ func (p *productController) DeleteById(ctx *gin.Context) {
 		return
 	}
 
-	product, err := p.productUseCase.DeleteById(id)
+	user, err := u.userUseCase.DeleteById(id)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"success": false,
@@ -140,22 +109,22 @@ func (p *productController) DeleteById(ctx *gin.Context) {
 		return
 	}
 
-	if product == nil {
+	if user == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "Product is not found",
+			"error":   "User is not found",
 		})
 		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
-		"data":    product,
+		"data":    user,
 	})
 }
 
-func (p *productController) Update(ctx *gin.Context) {
-	var dto dto.UpdateProductDto
+func (u *userController) Update(ctx *gin.Context) {
+	var dto dto.UpdateUserDto
 
 	if err := ctx.ShouldBindJSON(&dto); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
@@ -174,7 +143,7 @@ func (p *productController) Update(ctx *gin.Context) {
 		return
 	}
 
-	product, err := p.productUseCase.Update(id, dto.Name, dto.Description, dto.Price)
+	user, err := u.userUseCase.Update(id, dto.Username, dto.Password, dto.Position, dto.Role)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"success": false,
@@ -183,16 +152,16 @@ func (p *productController) Update(ctx *gin.Context) {
 		return
 	}
 
-	if product == nil {
+	if user == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "Product is not found",
+			"error":   "User is not found",
 		})
 		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
-		"data":    product,
+		"data":    user,
 	})
 }

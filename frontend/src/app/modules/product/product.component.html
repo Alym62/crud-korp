@@ -1,41 +1,43 @@
-<div class="container">
-  <h1>Produtos</h1>
-  <h6>Produstos listados abaixo. Ao lado você pode adicionar e ao clicar
-    no card você pode editar</h6>
-  <hr />
-</div>
+<main>
+  <div class="container">
+    <h1>Produtos</h1>
+    <h6>Produstos listados abaixo. Ao lado você pode adicionar e ao clicar
+      no card você pode editar</h6>
+    <hr />
+  </div>
 
-<div class="main">
-  <mat-form-field appearance="outline">
-    <input matInput placeholder="Pesquise por um produto...">
-  </mat-form-field>
-  <button class="button-add" (click)="add()">+ Adicionar</button>
-</div>
+  <div class="main">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Pesquise por um produto...">
+    </mat-form-field>
+    <button class="button-add" (click)="add()">+ Adicionar</button>
+  </div>
 
-<div class="container-list">
-  <div (click)="edit(item)" *ngFor="let item of pager.list" style="cursor: pointer;">
-    <div class="card">
-      <mat-icon (click)="delete(item.id, $event)" class="icon-clear">clear</mat-icon>
-      <div class="image-content">
-        <span class="overlay"></span>
+  <div class="container-list">
+    <div (click)="edit(item)" *ngFor="let item of pager.list" style="cursor: pointer;">
+      <div class="card">
+        <mat-icon (click)="delete(item.id, $event)" class="icon-clear">clear</mat-icon>
+        <div class="image-content">
+          <span class="overlay"></span>
 
-        <div class="card-image">
-          <img
-            src="https://w7.pngwing.com/pngs/518/194/png-transparent-computer-icons-icon-design-box-box-miscellaneous-angle-logo.png"
-            alt="image" class="card-img">
+          <div class="card-image">
+            <img
+              src="https://w7.pngwing.com/pngs/518/194/png-transparent-computer-icons-icon-design-box-box-miscellaneous-angle-logo.png"
+              alt="image" class="card-img">
+          </div>
+        </div>
+
+        <div class="card-content">
+          <h2 class="name">{{ item.name }}</h2>
+          <p class="description">{{ item.description }}</p>
+          <small>{{ item.createdAt | date: 'dd/MM/yyyy' }}</small>
         </div>
       </div>
-
-      <div class="card-content">
-        <h2 class="name">{{ item.name }}</h2>
-        <p class="description">{{ item.description }}</p>
-        <small>{{ item.createdAt | date: 'dd/MM/yyyy' }}</small>
-      </div>
+    </div>
+    <div class="pagination">
+      <button class="button-add" (click)="loadPreviousPage()" [disabled]="page <= 1">Anterior</button>
+      <span> Página {{ page }} de {{ totalPages }} - Total de registros {{ pager.total }} </span>
+      <button class="button-add" (click)="loadNextPage()" [disabled]="page >= totalPages">Próxima</button>
     </div>
   </div>
-  <div class="pagination">
-    <button class="button-add" (click)="loadPreviousPage()" [disabled]="page <= 1">Anterior</button>
-    <span> Página {{ page }} de {{ totalPages }} - Total de registros {{ pager.total }} </span>
-    <button class="button-add" (click)="loadNextPage()" [disabled]="page >= totalPages">Próxima</button>
-  </div>
-</div>
+</main>
