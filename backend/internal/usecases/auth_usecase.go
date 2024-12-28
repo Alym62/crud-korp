@@ -15,6 +15,6 @@ func NewAuthUseCase(repository repositories.AuthRepository) AuthUseCase {
 	}
 }
 
-func (au *AuthUseCase) Login(username string) (*models.User, error) {
-	return au.repository.Login(username)
+func (au *AuthUseCase) Login(email string) (*models.User, error) {
+	return au.repository.Login(email)
 }

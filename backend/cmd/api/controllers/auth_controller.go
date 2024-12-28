@@ -29,7 +29,7 @@ func (ac *authController) Login(ctx *gin.Context) {
 		return
 	}
 
-	user, err := ac.authUseCase.Login(dto.Username)
+	user, err := ac.authUseCase.Login(dto.Email)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"success": false,

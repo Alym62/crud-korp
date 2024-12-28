@@ -13,7 +13,7 @@ var jwtSecret = []byte("secret-key")
 func GenerateJWT(user *models.User) (string, error) {
 	claims := jsonWebToken.MapClaims{
 		"id":       user.ID,
-		"username": user.Username,
+		"email":    user.Email,
 		"position": user.Position,
 		"role":     user.Role,
 		"exp":      time.Now().Add(time.Hour * 24).Unix(),

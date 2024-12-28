@@ -16,20 +16,20 @@ func NewAuthRepository(connection *sql.DB) AuthRepository {
 	}
 }
 
-func (ar *AuthRepository) Login(username string) (*models.User, error) {
+func (ar *AuthRepository) Login(email string) (*models.User, error) {
 	var u models.User
 
 	query, err := ar.connection.Prepare(
-		"SELECT id, username, password, position, role, created_at, updated_at, removed FROM users " +
-			"WHERE removed = false AND username = $1")
+		"SELECT id, email, password, position, role, created_at, updated_at, removed FROM users " +
+			"WHERE removed = false AND email = $1")
 
 	if err != nil {
 		return nil, err
 	}
 
-	err = query.QueryRow(username).Scan(
+	err = query.QueryRow(email).Scan(
 		&u.ID,
-		&u.Username,
+		&u.Email,
 		&u.Password,
 		&u.Position,
 		&u.Role,

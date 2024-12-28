@@ -23,8 +23,8 @@ func (uc *UserUseCase) GetById(id uint) (*models.User, error) {
 	return uc.repository.GetById(id)
 }
 
-func (uc *UserUseCase) Create(username string, password string, position string, role models.Role) (models.User, error) {
-	user, err := models.NewUser(username, password, position, role)
+func (uc *UserUseCase) Create(email string, password string, position string, role models.Role) (models.User, error) {
+	user, err := models.NewUser(email, password, position, role)
 	if err != nil {
 		return models.User{}, err
 	}
@@ -36,8 +36,8 @@ func (uc *UserUseCase) DeleteById(id uint) (*models.User, error) {
 	return uc.repository.DeleteById(id)
 }
 
-func (uc *UserUseCase) Update(id uint, username string, password string, position string, role models.Role) (*models.User, error) {
-	user, err := models.NewUser(username, password, position, role)
+func (uc *UserUseCase) Update(id uint, email string, password string, position string, role models.Role) (*models.User, error) {
+	user, err := models.NewUser(email, password, position, role)
 	if err != nil {
 		return nil, err
 	}

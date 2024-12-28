@@ -19,7 +19,7 @@ func NewUserRepository(connection *sql.DB) UserRepository {
 }
 
 func (ur *UserRepository) GetList() ([]models.User, error) {
-	query := "SELECT id, username, position, role, created_at, updated_at, removed FROM users WHERE removed = false"
+	query := "SELECT id, email, position, role, created_at, updated_at, removed FROM users WHERE removed = false"
 	rows, err := ur.connection.Query(query)
 
 	if err != nil {
@@ -33,7 +33,7 @@ func (ur *UserRepository) GetList() ([]models.User, error) {
 	for rows.Next() {
 		err = rows.Scan(
 			&user.ID,
-			&user.Username,
+			&user.Email,
 			&user.Position,
 			&user.Role,
 			&user.CreatedAt,
@@ -57,15 +57,15 @@ func (ur *UserRepository) GetList() ([]models.User, error) {
 func (ur *UserRepository) Create(user *models.User) (models.User, error) {
 	var u models.User
 
-	query, err := ur.connection.Prepare("INSERT INTO users (username, password, position, role, created_at, updated_at, removed)" +
-		"VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id, username, position, role, created_at, updated_at, removed")
+	query, err := ur.connection.Prepare("INSERT INTO users (email, password, position, role, created_at, updated_at, removed)" +
+		"VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id, email, position, role, created_at, updated_at, removed")
 
 	if err != nil {
 		return models.User{}, err
 	}
 
 	err = query.QueryRow(
-		user.Username,
+		user.Email,
 		user.Password,
 		user.Position,
 		user.Role,
@@ -74,7 +74,7 @@ func (ur *UserRepository) Create(user *models.User) (models.User, error) {
 		user.Removed,
 	).Scan(
 		&u.ID,
-		&u.Username,
+		&u.Email,
 		&u.Position,
 		&u.Role,
 		&u.CreatedAt,
@@ -94,7 +94,7 @@ func (ur *UserRepository) GetById(id uint) (*models.User, error) {
 	var u models.User
 
 	query, err := ur.connection.Prepare(
-		"SELECT id, username, password, position, role, created_at, updated_at, removed FROM users " +
+		"SELECT id, email, password, position, role, created_at, updated_at, removed FROM users " +
 			"WHERE removed = false AND id = $1")
 
 	if err != nil {
@@ -103,7 +103,7 @@ func (ur *UserRepository) GetById(id uint) (*models.User, error) {
 
 	err = query.QueryRow(id).Scan(
 		&u.ID,
-		&u.Username,
+		&u.Email,
 		&u.Password,
 		&u.Position,
 		&u.Role,
@@ -130,7 +130,7 @@ func (ur *UserRepository) DeleteById(id uint) (*models.User, error) {
 
 	query, err := ur.connection.Prepare(
 		"UPDATE users SET removed = true, updated_at = $1 " +
-			"WHERE removed = false AND id = $2 RETURNING id, username, position, role, created_at, updated_at, removed")
+			"WHERE removed = false AND id = $2 RETURNING id, email, position, role, created_at, updated_at, removed")
 
 	if err != nil {
 		return nil, err
@@ -138,7 +138,7 @@ func (ur *UserRepository) DeleteById(id uint) (*models.User, error) {
 
 	err = query.QueryRow(time.Now(), id).Scan(
 		&u.ID,
-		&u.Username,
+		&u.Email,
 		&u.Position,
 		&u.Role,
 		&u.CreatedAt,
@@ -163,16 +163,16 @@ func (ur *UserRepository) Update(id uint, user *models.User) (*models.User, erro
 	var u models.User
 
 	query, err := ur.connection.Prepare(
-		"UPDATE users SET username = $1, password = $2, position = $3, role = $4, updated_at = $5 " +
-			"WHERE removed = false AND id = $5 RETURNING id, username, position, role, created_at, updated_at, removed")
+		"UPDATE users SET email = $1, password = $2, position = $3, role = $4, updated_at = $5 " +
+			"WHERE removed = false AND id = $5 RETURNING id, email, position, role, created_at, updated_at, removed")
 
 	if err != nil {
 		return nil, err
 	}
 
-	err = query.QueryRow(user.Username, user.Password, user.Position, user.Role, time.Now(), id).Scan(
+	err = query.QueryRow(user.Email, user.Password, user.Position, user.Role, time.Now(), id).Scan(
 		&u.ID,
-		&u.Username,
+		&u.Email,
 		&u.Position,
 		&u.Role,
 		&u.CreatedAt,

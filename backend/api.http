@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzU1MDg3MzYsImlkIjoxLCJwb3NpdGlvbiI6ImdlcmVudGUiLCJyb2xlIjoibWFuYWdlciIsInVzZXJuYW1lIjoibWFuYWdlciJ9.uiP0WVkUIvKE8HxJ6zB1rwr8Me5MI2nFLuqlqHknI7E
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNlbGxlckBlbWFpbC5jb20iLCJleHAiOjE3MzU1MTA0MjQsImlkIjoyLCJwb3NpdGlvbiI6InZlbmRlZG9yIiwicm9sZSI6InNlbGxlciJ9.ibXg_JuZH9_opDImjwM01c_ryeiHMZjrhJHdD6k8uE4
 
 GET http://localhost:8080/healthy
 
@@ -41,17 +41,17 @@ DELETE http://localhost:8080/api/v1/product/delete/24
 GET http://localhost:8080/api/v1/user/list
 
 ###
-GET http://localhost:8080/api/v1/user/1
+GET http://localhost:8080/api/v1/user/2
 
 ###
 POST http://localhost:8080/api/v1/user/create
 Content-Type: application/json
 
 {
-    "username": "manager",
+    "email": "seller@email.com",
     "password": "123456",
-    "position": "gerente",
-    "role": "manager"
+    "position": "vendedor",
+    "role": "seller"
 }
 
 ###
@@ -74,6 +74,6 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-    "username": "manager",
+    "email": "seller@email.com",
     "password": "123456"
 }

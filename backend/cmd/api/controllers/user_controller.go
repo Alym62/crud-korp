@@ -42,7 +42,7 @@ func (u *userController) Create(ctx *gin.Context) {
 		return
 	}
 
-	result, err := u.userUseCase.Create(dto.Username, dto.Password, dto.Position, dto.Role)
+	result, err := u.userUseCase.Create(dto.Email, dto.Password, dto.Position, dto.Role)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"success": false,
@@ -143,7 +143,7 @@ func (u *userController) Update(ctx *gin.Context) {
 		return
 	}
 
-	user, err := u.userUseCase.Update(id, dto.Username, dto.Password, dto.Position, dto.Role)
+	user, err := u.userUseCase.Update(id, dto.Email, dto.Password, dto.Position, dto.Role)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"success": false,

@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"regexp"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -16,7 +17,7 @@ const (
 
 type User struct {
 	ID        uint      `json:"id"`
-	Username  string    `json:"username"`
+	Email     string    `json:"email"`
 	Password  string    `json:"password"`
 	Position  string    `json:"position"`
 	Role      Role      `json:"role"`
@@ -25,14 +26,14 @@ type User struct {
 	Removed   bool      `json:"removed"`
 }
 
-func NewUser(username string, password string, position string, role Role) (*User, error) {
+func NewUser(email string, password string, position string, role Role) (*User, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, err
 	}
 
 	u := &User{
-		Username:  username,
+		Email:     email,
 		Password:  string(hashedPassword),
 		Position:  position,
 		Role:      role,
@@ -55,8 +56,10 @@ func (u *User) CheckPassword(password string) bool {
 }
 
 func (u *User) isValid() error {
-	if len(u.Username) < 5 {
-		return fmt.Errorf("username must be at least 5 characters, got %d", len(u.Username))
+	regexEmail := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+
+	if !regexEmail.MatchString(u.Email) {
+		return fmt.Errorf("invalid email format: %s", u.Email)
 	}
 
 	if len(u.Password) < 6 {
