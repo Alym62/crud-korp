@@ -1,0 +1,44 @@
+.container {
+  padding: 1rem;
+
+  h1 {
+    color: #000;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 8px;
+  }
+
+  h6 {
+    color: #9F9FA9;
+    font-weight: 400;
+    font-size: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .container-form {
+    margin-top: 2rem;
+    width: 100%;
+    height: 100%;
+
+    form {
+      display: flex;
+      flex-direction: column;
+
+      mat-form-field {
+        margin-top: 1rem;
+        width: 100%;
+      }
+    }
+
+    hr {
+      margin-top: 1rem;
+    }
+
+    .main {
+      display: flex;
+      width: 100%;
+      justify-content: end;
+    }
+  }
+}

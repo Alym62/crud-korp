@@ -71,7 +71,7 @@ func (pr *ProductRepository) GetAllByPage(page int, limit int) (pkg.PageResponse
 	totalPages := (total + limit - 1) / limit
 
 	return pkg.PageResponse[models.Product]{
-		Data:       productList,
+		List:       productList,
 		Total:      total,
 		Page:       page,
 		Limit:      limit,
