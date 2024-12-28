@@ -14,6 +14,14 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "paths": {
+      "@modules/*": [
+        "./src/app/modules/*"
+      ],
+      "@shared/*": [
+        "./src/app/shared/*"
+      ]
+    },
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",

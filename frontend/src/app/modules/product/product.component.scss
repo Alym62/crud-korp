@@ -1,0 +1,37 @@
+.container {
+  margin-bottom: 1rem;
+
+  h1 {
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  h6 {
+    color: #9F9FA9;
+    font-weight: 400;
+    font-size: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+.main {
+  display: flex;
+  width: 100%;
+  justify-content: end;
+
+  .button-add {
+    margin-left: 1rem;
+    width: 200px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    background-color: #FC064B;
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+  }
+}

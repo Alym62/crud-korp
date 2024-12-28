@@ -1,0 +1,8 @@
+<mat-sidenav-container>
+  <mat-sidenav [style]="'background-color: #E4EAF0;'" opened mode="side" [style.width]="sidenavWidth">
+    <content-sidenav-component [collapsed]="isCollapsed"></content-sidenav-component>
+  </mat-sidenav>
+  <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

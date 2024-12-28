@@ -128,7 +128,7 @@ func (pr *ProductRepository) DeleteById(id uint) (*models.Product, error) {
 
 	query, err := pr.connection.Prepare(
 		"UPDATE product SET removed = true, updated_at = $1 " +
-			"WHERE id = $2 RETURNING id, name, description, price, created_at, updated_at, removed")
+			"WHERE removed = false AND id = $2 RETURNING id, name, description, price, created_at, updated_at, removed")
 
 	if err != nil {
 		return nil, err
