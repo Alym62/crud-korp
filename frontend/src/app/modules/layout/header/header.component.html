@@ -1,7 +1,12 @@
 <mat-toolbar class="mat-elevation-z3"
   [style]="'background-color: #E4EAF0; display: flex; align-items: center; gap: 1rem;'">
-  <button mat-icon-button (click)="toggleCollapsed()">
-    <mat-icon [style.color]="'#2B485A'">menu</mat-icon>
-  </button>
-  <img src="https://www.korp.com.br/wp-content/themes/korp2022/images/logo.webp" alt="logo korp" width="100px">
+  <div class="start">
+    <button mat-icon-button (click)="toggleCollapsed()">
+      <mat-icon [style.color]="'#2B485A'">menu</mat-icon>
+    </button>
+    <img src="https://www.korp.com.br/wp-content/themes/korp2022/images/logo.webp" alt="logo korp" width="100px">
+  </div>
+  <div class="end">
+    <mat-icon style="cursor: pointer;" (click)="logout()">input</mat-icon>
+  </div>
 </mat-toolbar>

@@ -1,0 +1,40 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+
+  .container {
+    margin-bottom: 1rem;
+
+    h1 {
+      color: #000;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    h6 {
+      color: #9F9FA9;
+      font-weight: 400;
+      font-size: 12px;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.chart-card {
+  background: #2B485A;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+canvas {
+  display: block;
+  margin: auto;
+}

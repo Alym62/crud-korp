@@ -1,4 +1,14 @@
 mat-toolbar {
   position: relative;
   z-index: 5;
+
+  .start {
+    width: 50%;
+  }
+
+  .end {
+    width: 50%;
+    display: flex;
+    justify-content: end;
+  }
 }

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { CurrentUserDTO } from '@shared/models/dto/current-user.dto';
 import { LoginDTO } from '@shared/models/dto/login.dto';
 import { Observable, tap } from 'rxjs';
@@ -12,6 +13,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
   ) { }
 
   login(obj: LoginDTO): Observable<{ data: { currentUser: CurrentUserDTO, token: string }, success: boolean }> {
@@ -27,6 +29,9 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
+
+    this.router.navigate(['/login']);
   }
 
   private saveTokenInLocalStorage(token: string, currentUser: object): void {
