@@ -4,6 +4,7 @@
   <div class="header-text" *ngIf="!sidenavCollapsed()">
     <h2>{{ currentUser != null ? currentUser.email : 'N/A' }}</h2>
     <p>{{ currentUser != null ? currentUser.position : 'N/A' }}</p>
+    <a [routerLink]="['/user', currentUser?.id]">Ver perfil</a>
   </div>
 </div>
 

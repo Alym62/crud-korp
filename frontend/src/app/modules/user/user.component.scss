@@ -1,0 +1,65 @@
+.container {
+  margin-bottom: 1rem;
+
+  h1 {
+    color: #000;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  h6 {
+    color: #9F9FA9;
+    font-weight: 400;
+    font-size: 12px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+.user-profile-container {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  min-height: 100vh;
+
+  .user-profile-card {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    overflow: hidden;
+    padding: 1rem;
+
+    .user-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 1rem;
+
+      .user-detail {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 16px;
+        color: #555;
+
+        mat-icon {
+          font-size: 20px;
+          color: #2B485A;
+        }
+      }
+    }
+  }
+
+
+  button {
+    margin-top: 1rem;
+  }
+}

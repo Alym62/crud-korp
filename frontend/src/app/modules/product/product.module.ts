@@ -4,13 +4,11 @@ import { ProductService } from '@shared/services/product.service';
 import { SharedModule } from '@shared/shared.module';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductComponent } from './product.component';
-import { ProductViewComponent } from './product-view/product-view.component';
 
 @NgModule({
   declarations: [
     ProductComponent,
     ProductEditComponent,
-    ProductViewComponent
   ],
   imports: [
     CommonModule,

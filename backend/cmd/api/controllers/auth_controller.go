@@ -67,6 +67,7 @@ func (ac *authController) Login(ctx *gin.Context) {
 		"success": true,
 		"data": dto.ResponseAuth{
 			CurrentUser: dto.CurrentUserResponse{
+				ID:       user.ID,
 				Email:    user.Email,
 				Position: user.Position,
 				Role:     user.Role,

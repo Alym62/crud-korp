@@ -4,6 +4,7 @@ import { DashboardComponent } from '@modules/dashboard/dashboard.component';
 import { BaseComponent } from '@modules/layout/base/base.component';
 import { LoginComponent } from '@modules/login/login.component';
 import { ProductComponent } from '@modules/product/product.component';
+import { UserComponent } from '@modules/user/user.component';
 import { AuthGuard } from '@shared/commons/auth.guard';
 
 const routes: Routes = [
@@ -19,6 +20,9 @@ const routes: Routes = [
       },
       {
         path: 'product', component: ProductComponent,
+      },
+      {
+        path: 'user/:id', component: UserComponent,
       },
     ],
   },

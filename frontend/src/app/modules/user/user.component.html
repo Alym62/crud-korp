@@ -1,1 +1,32 @@
-<p>user works!</p>
+<div class="container">
+  <h1>Meu perfil</h1>
+  <h6>Abaixo está todas aas informações do usuário logado no sistema.</h6>
+  <hr />
+</div>
+<div class="user-profile-container">
+  <mat-card class="user-profile-card">
+    <mat-card-header class="user-header">
+      <mat-card-title>{{ user.email }}</mat-card-title>
+      <mat-card-subtitle>{{ user.position }}</mat-card-subtitle>
+      <img src="../../../assets/default-image.png" alt="default image perfil" width="100px">
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="user-details">
+        <div class="user-detail">
+          <mat-icon>work</mat-icon>
+          <span>{{ user.role }}</span>
+        </div>
+
+        <div class="user-detail">
+          <mat-icon>date_range</mat-icon>
+          <span>{{ user.createdAt | date: 'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <button class="button-add">
+      Editar
+    </button>
+  </mat-card>
+</div>
