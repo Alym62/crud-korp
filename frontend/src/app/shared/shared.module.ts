@@ -14,6 +14,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -52,5 +53,6 @@ import { RouterModule } from '@angular/router';
     MatPaginatorModule,
     MatSnackBarModule,
   ],
+  providers: [AuthService]
 })
 export class SharedModule { }

@@ -1,0 +1,30 @@
+<div class="container">
+  <section class="left">
+    <img src="https://www.korp.com.br/wp-content/themes/korp2022/images/logo.webp" alt="logo korp" width="200px">
+    <div class="section-content">
+      <h1>Solução para seus produtos digitais. Venha transformar sua empresa junto com a gente.</h1>
+      <h6>Ao lado você pode fazer login ou se cadastrar. Qualquer dúvida entre em contato com o suporte.
+      </h6>
+    </div>
+  </section>
+  <section class="right">
+    <form [formGroup]="formGroup">
+      <h1>Login</h1>
+      <h6>Faça login abaixo ou se registre ao lado.</h6>
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input matInput placeholder="Digite o nome do produto..." formControlName="email">
+        <mat-icon matIconSuffix>account_circle</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input type="password" matInput placeholder="Digite a descrição do produto..." formControlName="password">
+        <mat-icon matIconSuffix>https</mat-icon>
+      </mat-form-field>
+      <hr>
+      <div class="main">
+        <button class="button-add" (click)="login()">Entrar</button>
+      </div>
+    </form>
+  </section>
+</div>

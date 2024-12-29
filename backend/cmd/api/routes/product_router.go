@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/Alym62/crud-korp/cmd/api/controllers"
+	"github.com/Alym62/crud-korp/cmd/api/docs"
 	"github.com/Alym62/crud-korp/internal/repositories"
 	"github.com/Alym62/crud-korp/internal/usecases"
 	"github.com/Alym62/crud-korp/pkg/middlewares"
@@ -12,13 +13,16 @@ import (
 
 func ProductRouter(router *gin.Engine, dbConnection *sql.DB) {
 
+	basePath := "/api/v1/product"
+	docs.SwaggerInfo.BasePath = basePath
+
 	productRepository := repositories.NewProductRepository(dbConnection)
 
 	productUseCase := usecases.NewProductUseCase(productRepository)
 
 	productController := controllers.NewProductController(productUseCase)
 
-	v1 := router.Group("/api/v1/product")
+	v1 := router.Group(basePath)
 	v1.Use(middlewares.AuthMiddleware())
 	v1.GET("/pager", productController.GetAllByPage)
 	v1.GET("/list", productController.GetList)

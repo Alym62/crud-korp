@@ -8,9 +8,13 @@ import (
 
 	"github.com/Alym62/crud-korp/cmd/api/routes"
 	"github.com/Alym62/crud-korp/pkg/db"
+	"github.com/Alym62/crud-korp/pkg/middlewares"
 	"github.com/Alym62/crud-korp/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func loadEnv() {
@@ -62,11 +66,15 @@ func main() {
 	// @TODO: Initializer router with gin
 	router := gin.Default()
 
+	router.Use(middlewares.CORSMiddlewares())
+
 	router.GET("/healthy", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"success": true,
 		})
 	})
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	// @TODO: All router
 	routes.ProductRouter(router, dbConnection)
