@@ -2,8 +2,8 @@
   <img src="../../../../../assets/default-image.png" alt="image profile" [width]="profilePicSize()"
     [height]="profilePicSize()">
   <div class="header-text" *ngIf="!sidenavCollapsed()">
-    <h2>Info</h2>
-    <p>Name</p>
+    <h2>{{ currentUser != null ? currentUser.email : 'N/A' }}</h2>
+    <p>{{ currentUser != null ? currentUser.position : 'N/A' }}</p>
   </div>
 </div>
 

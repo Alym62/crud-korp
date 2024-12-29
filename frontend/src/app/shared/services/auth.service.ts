@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CurrentUserDTO } from '@shared/models/dto/current-user.dto';
 import { LoginDTO } from '@shared/models/dto/login.dto';
 import { Observable, tap } from 'rxjs';
 
@@ -13,10 +14,10 @@ export class AuthService {
     private http: HttpClient,
   ) { }
 
-  login(obj: LoginDTO): Observable<{ data: string, success: boolean }> {
-    return this.http.post<{ data: string, success: boolean }>(`${this.baseUrl}/login`, obj)
+  login(obj: LoginDTO): Observable<{ data: { currentUser: CurrentUserDTO, token: string }, success: boolean }> {
+    return this.http.post<{ data: { currentUser: CurrentUserDTO, token: string }, success: boolean }>(`${this.baseUrl}/login`, obj)
       .pipe(
-        tap((res) => this.saveTokenInLocalStorage(res.data)),
+        tap((res) => this.saveTokenInLocalStorage(res.data.token, res.data.currentUser)),
       );
   }
 
@@ -28,7 +29,8 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  private saveTokenInLocalStorage(token: string): void {
+  private saveTokenInLocalStorage(token: string, currentUser: object): void {
     localStorage.setItem('token', token);
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
 }

@@ -1,4 +1,5 @@
 import { Component, computed, Input, signal, Signal } from '@angular/core';
+import { UtilHelper } from '@shared/helpers/util.helper';
 
 @Component({
   selector: 'content-sidenav-component',
@@ -6,7 +7,10 @@ import { Component, computed, Input, signal, Signal } from '@angular/core';
   styleUrls: ['./content-sidenav.component.scss']
 })
 export class ContentSidenavComponent {
+  currentUser = UtilHelper.getCurrentUser();
+
   sidenavCollapsed = signal(false);
+
   @Input('collapsed') set collapsed(val: boolean) {
     this.sidenavCollapsed.set(val);
   }

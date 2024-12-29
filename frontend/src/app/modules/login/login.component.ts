@@ -44,12 +44,13 @@ export class LoginComponent {
 
     this.authService.login(this.formGroup.value).subscribe({
       next: (value) => {
-        this.router.navigate(['/dashboard']);
-        this.openSnackBar('Bem-vindo ao nosso sistema!', 'x');
+        if (value.success) {
+          this.router.navigate(['/dashboard']);
+          this.openSnackBar('Bem-vindo ao nosso sistema!', 'x');
+        }
       },
       error: (err) => {
-        this.openSnackBar(err.error, 'x');
-        console.log(err);
+        this.openSnackBar(err.error.error, 'x');
       }
     });
   }

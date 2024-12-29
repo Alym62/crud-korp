@@ -20,8 +20,8 @@ func NewAuthController(useCase usecases.AuthUseCase) authController {
 }
 
 func (ac *authController) Login(ctx *gin.Context) {
-	var dto dto.LoginDto
-	if err := ctx.ShouldBindJSON(&dto); err != nil {
+	var d dto.LoginDto
+	if err := ctx.ShouldBindJSON(&d); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"error":   err.Error(),
@@ -29,7 +29,7 @@ func (ac *authController) Login(ctx *gin.Context) {
 		return
 	}
 
-	user, err := ac.authUseCase.Login(dto.Email)
+	user, err := ac.authUseCase.Login(d.Email)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"success": false,
@@ -46,7 +46,7 @@ func (ac *authController) Login(ctx *gin.Context) {
 		return
 	}
 
-	if !user.CheckPassword(dto.Password) {
+	if !user.CheckPassword(d.Password) {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
 			"error":   "Password is not compatible",
@@ -65,6 +65,13 @@ func (ac *authController) Login(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
-		"data":    token,
+		"data": dto.ResponseAuth{
+			CurrentUser: dto.CurrentUserResponse{
+				Email:    user.Email,
+				Position: user.Position,
+				Role:     user.Role,
+			},
+			Token: token,
+		},
 	})
 }
