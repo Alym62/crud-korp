@@ -43,6 +43,9 @@ export class UserEditComponent implements OnInit {
       position: [null],
       role: [null, Validators.required]
     });
+    this.formGroup.valueChanges.subscribe(value => {
+      Object.assign(this.user, value);
+    });
   }
 
   onRoleChange(selectedRole: string): void {

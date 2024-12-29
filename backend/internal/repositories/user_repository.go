@@ -164,7 +164,7 @@ func (ur *UserRepository) Update(id uint, user *models.User) (*models.User, erro
 
 	query, err := ur.connection.Prepare(
 		"UPDATE users SET email = $1, password = $2, position = $3, role = $4, updated_at = $5 " +
-			"WHERE removed = false AND id = $5 RETURNING id, email, position, role, created_at, updated_at, removed")
+			"WHERE removed = false AND id = $6 RETURNING id, email, position, role, created_at, updated_at, removed")
 
 	if err != nil {
 		return nil, err
