@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>{{isNew ? 'Adicionar' : 'Alterar'}} usuário</h1>
+  <h6>Preencha os dados e crie uma novo usuário</h6>
+
+  <div class="container-form">
+    <form [formGroup]="formGroup">
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail</mat-label>
+        <input type="email" matInput placeholder="Digite o seu e-mail..." formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input type="password" matInput placeholder="Digite a sua senha..." formControlName="password">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Cargo</mat-label>
+        <input matInput placeholder="Digite o seu cargo..." formControlName="position">
+      </mat-form-field>
+      <div class="role-selection">
+        <mat-slide-toggle color="primary" class="custom-toggle" formControlName="role"
+          (change)="onRoleChange('manager')" [checked]="isManagerSelected">
+          Gerente
+        </mat-slide-toggle>
+
+        <mat-slide-toggle color="primary" formControlName="role" (change)="onRoleChange('seller')"
+          [checked]="isSellerSelected">
+          Vendedor
+        </mat-slide-toggle>
+      </div>
+    </form>
+    <hr>
+    <div class="main">
+      <button class="button-add" (click)="saveOrUpdate()">{{isNew ? 'Adicionar' : 'Alterar'}}</button>
+    </div>
+  </div>
+</div>

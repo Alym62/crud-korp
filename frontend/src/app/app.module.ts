@@ -7,6 +7,7 @@ import { DashboardModule } from '@modules/dashboard/dashboard.module';
 import { LayoutModule } from '@modules/layout/layout.module';
 import { LoginModule } from '@modules/login/login.module';
 import { ProductModule } from '@modules/product/product.module';
+import { UserModule } from '@modules/user/user.module';
 import { JWTInterceptor } from '@shared/commons/jwt.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { AppComponent } from './app.component';
     DashboardModule,
     ProductModule,
     LoginModule,
+    UserModule,
   ],
   providers: [
     {

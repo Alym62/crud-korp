@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
@@ -36,6 +37,7 @@ import { AuthService } from './services/auth.service';
     MatCardModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
   ],
   exports: [
     MatIconModule,
@@ -52,6 +54,7 @@ import { AuthService } from './services/auth.service';
     MatCardModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
   ],
   providers: [AuthService]
 })

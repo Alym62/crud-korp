@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { UserEditComponent } from '@modules/user/user-edit/user-edit.component';
 import { AuthService } from '@shared/services/auth.service';
 
 @Component({
@@ -17,6 +19,7 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router,
     private _snackBar: MatSnackBar,
+    private _matDialog: MatDialog,
   ) {
     this.createForm();
   }
@@ -53,5 +56,18 @@ export class LoginComponent {
         this.openSnackBar(err.error.error, 'x');
       }
     });
+  }
+
+  register(): void {
+    const dialogRef = this._matDialog.open(UserEditComponent, {
+      width: '600px',
+      height: '600px'
+    })
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.openSnackBar('Parabéns! Você acaba de ser registrado no nosso sistema.', 'x');
+      }
+    })
   }
 }
