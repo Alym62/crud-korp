@@ -30,7 +30,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		if tokenString == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"success": false,
-				"error":   "Authorization header required",
+				"error":   "Cabeçalho com 'Authorization' é obrigatório",
 			})
 			c.Abort()
 			return
@@ -41,7 +41,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		} else {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"success": false,
-				"error":   "Invalid Authorization format",
+				"error":   "Formato de 'Authorization' inválido",
 			})
 			c.Abort()
 			return

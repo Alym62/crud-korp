@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/Alym62/crud-korp/internal/models"
-	"github.com/Alym62/crud-korp/pkg"
+	"github.com/Alym62/crud-korp/pkg/utils"
 )
 
 type ProductRepository struct {
@@ -19,7 +19,7 @@ func NewProductRepository(connection *sql.DB) ProductRepository {
 	}
 }
 
-func (pr *ProductRepository) GetAllByPage(page int, limit int) (pkg.PageResponse[models.Product], error) {
+func (pr *ProductRepository) GetAllByPage(page int, limit int) (utils.PageResponse[models.Product], error) {
 	if page < 1 {
 		page = 1
 	}
@@ -32,7 +32,7 @@ func (pr *ProductRepository) GetAllByPage(page int, limit int) (pkg.PageResponse
 
 	if err != nil {
 		fmt.Println(err)
-		return pkg.PageResponse[models.Product]{}, err
+		return utils.PageResponse[models.Product]{}, err
 	}
 
 	var productList []models.Product
@@ -51,7 +51,7 @@ func (pr *ProductRepository) GetAllByPage(page int, limit int) (pkg.PageResponse
 
 		if err != nil {
 			fmt.Println(err)
-			return pkg.PageResponse[models.Product]{}, err
+			return utils.PageResponse[models.Product]{}, err
 		}
 
 		productList = append(productList, product)
@@ -65,12 +65,12 @@ func (pr *ProductRepository) GetAllByPage(page int, limit int) (pkg.PageResponse
 	err = pr.connection.QueryRow(countQuery).Scan(&total)
 	if err != nil {
 		fmt.Println(err)
-		return pkg.PageResponse[models.Product]{}, err
+		return utils.PageResponse[models.Product]{}, err
 	}
 
 	totalPages := (total + limit - 1) / limit
 
-	return pkg.PageResponse[models.Product]{
+	return utils.PageResponse[models.Product]{
 		List:       productList,
 		Total:      total,
 		Page:       page,

@@ -3,7 +3,7 @@ package usecases
 import (
 	"github.com/Alym62/crud-korp/internal/models"
 	"github.com/Alym62/crud-korp/internal/repositories"
-	"github.com/Alym62/crud-korp/pkg"
+	"github.com/Alym62/crud-korp/pkg/utils"
 )
 
 type ProductUseCase struct {
@@ -16,7 +16,7 @@ func NewProductUseCase(repository repositories.ProductRepository) ProductUseCase
 	}
 }
 
-func (pu *ProductUseCase) GetAllByPage(page int, limit int) (pkg.PageResponse[models.Product], error) {
+func (pu *ProductUseCase) GetAllByPage(page int, limit int) (utils.PageResponse[models.Product], error) {
 	return pu.repository.GetAllByPage(page, limit)
 }
 

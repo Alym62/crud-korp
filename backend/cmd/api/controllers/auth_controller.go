@@ -41,7 +41,7 @@ func (ac *authController) Login(ctx *gin.Context) {
 	if user == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "User is not found",
+			"error":   "Usuário não encontrado",
 		})
 		return
 	}
@@ -49,7 +49,7 @@ func (ac *authController) Login(ctx *gin.Context) {
 	if !user.CheckPassword(d.Password) {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "Password is not compatible",
+			"error":   "Senha incorreta. Tente novamente",
 		})
 		return
 	}
@@ -58,7 +58,7 @@ func (ac *authController) Login(ctx *gin.Context) {
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "Failed to generate token",
+			"error":   "Falha ao gerar token",
 		})
 		return
 	}

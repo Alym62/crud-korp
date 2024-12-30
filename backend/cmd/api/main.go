@@ -12,9 +12,6 @@ import (
 	"github.com/Alym62/crud-korp/pkg/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-
-	swaggerfiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func loadEnv() {
@@ -32,12 +29,12 @@ func loadEnv() {
 func main() {
 	loadEnv()
 
-	// @TODO: Database connection and configuration for production
+	// Conexão com o banco de dados
 	var dbConnection *sql.DB
 
 	port, err := utils.ConverterStrToInt(os.Getenv("DB_PORT"))
 	if err != nil {
-		panic("Is not possible converter int")
+		panic(err.Error())
 	}
 
 	appProduction := os.Getenv("APP_PRODUCTION")
@@ -51,7 +48,7 @@ func main() {
 		})
 
 		if err != nil {
-			fmt.Println("error connection database", err)
+			fmt.Println("Erro ao tentar conectar ao banco de dados.", err)
 		}
 
 		dbConnection = conn
@@ -60,10 +57,10 @@ func main() {
 	}
 
 	if dbConnection == nil {
-		panic("No connection to a database")
+		panic("Nenhuma conexão encontrada com o banco de dados.")
 	}
 
-	// @TODO: Initializer router with gin
+	// Inicializando o Gin
 	router := gin.Default()
 
 	router.Use(middlewares.CORSMiddlewares())
@@ -74,9 +71,7 @@ func main() {
 		})
 	})
 
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
-
-	// @TODO: All router
+	// Todas as rotas
 	routes.ProductRouter(router, dbConnection)
 	routes.UserRouter(router, dbConnection)
 	routes.AuthRouter(router, dbConnection)

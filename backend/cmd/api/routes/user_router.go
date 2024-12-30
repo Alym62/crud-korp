@@ -20,7 +20,6 @@ func UserRouter(router *gin.Engine, dbConnection *sql.DB) {
 
 	v1 := router.Group("/api/v1/user")
 	v1.Use(middlewares.CORSMiddlewares())
-	v1.GET("/list", userController.GetList)
 	v1.GET("/:id", userController.GetById)
 	v1.POST("/create", userController.Create)
 	v1.PUT("/update/:id", userController.Update)

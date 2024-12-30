@@ -29,7 +29,7 @@ func ConnectDB(configConnection ConfigConnectionDB) (*sql.DB, error) {
 		panic(err)
 	}
 
-	fmt.Println("Connected to " + configConnection.DBName)
+	fmt.Println("Conectado com o banco: " + configConnection.DBName)
 
 	return db, nil
 }

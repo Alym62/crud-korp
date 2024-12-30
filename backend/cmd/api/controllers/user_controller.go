@@ -19,19 +19,6 @@ func NewUserController(useCase usecases.UserUseCase) userController {
 	}
 }
 
-func (u *userController) GetList(ctx *gin.Context) {
-	users, err := u.userUseCase.GetList()
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
-		return
-	}
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"success": true,
-		"data":    users,
-	})
-}
-
 func (u *userController) Create(ctx *gin.Context) {
 	var dto dto.CreateUserDto
 	if err := ctx.ShouldBindJSON(&dto); err != nil {
@@ -79,7 +66,7 @@ func (u *userController) GetById(ctx *gin.Context) {
 	if user == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "User is not found",
+			"error":   "Usuário não encontrado",
 		})
 		return
 	}
@@ -112,7 +99,7 @@ func (u *userController) DeleteById(ctx *gin.Context) {
 	if user == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "User is not found",
+			"error":   "Usuário não encontrado",
 		})
 		return
 	}
@@ -155,7 +142,7 @@ func (u *userController) Update(ctx *gin.Context) {
 	if user == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "User is not found",
+			"error":   "Usuário não encontrado",
 		})
 		return
 	}

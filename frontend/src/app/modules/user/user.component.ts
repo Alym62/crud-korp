@@ -55,7 +55,7 @@ export class UserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.openSnackBar('Produto editado com sucesso!', 'x');
+        this.openSnackBar('Usuário editado com sucesso!', 'x');
         this.getById();
       }
     })

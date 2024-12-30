@@ -15,10 +15,6 @@ func NewUserUseCase(repository repositories.UserRepository) UserUseCase {
 	}
 }
 
-func (uc *UserUseCase) GetList() ([]models.User, error) {
-	return uc.repository.GetList()
-}
-
 func (uc *UserUseCase) GetById(id uint) (*models.User, error) {
 	return uc.repository.GetById(id)
 }

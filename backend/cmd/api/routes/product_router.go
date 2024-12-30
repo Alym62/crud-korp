@@ -4,7 +4,6 @@ import (
 	"database/sql"
 
 	"github.com/Alym62/crud-korp/cmd/api/controllers"
-	"github.com/Alym62/crud-korp/cmd/api/docs"
 	"github.com/Alym62/crud-korp/internal/repositories"
 	"github.com/Alym62/crud-korp/internal/usecases"
 	"github.com/Alym62/crud-korp/pkg/middlewares"
@@ -14,7 +13,6 @@ import (
 func ProductRouter(router *gin.Engine, dbConnection *sql.DB) {
 
 	basePath := "/api/v1/product"
-	docs.SwaggerInfo.BasePath = basePath
 
 	productRepository := repositories.NewProductRepository(dbConnection)
 

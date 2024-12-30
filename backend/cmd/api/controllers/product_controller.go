@@ -19,17 +19,6 @@ func NewProductController(useCase usecases.ProductUseCase) productController {
 	}
 }
 
-// GetAllByPage recupera produtos paginados
-// @Summary      Recupera produtos paginados
-// @Tags         Products
-// @Accept       json
-// @Produce      json
-// @Param        page query int false "Número da página" default(1)
-// @Param        limit query int false "Limite de itens por página" default(10)
-// @Success      200  {object}  []internal.models.Product
-// @Failure      400  {object}  gin.H
-// @Failure      500  {object}  gin.H
-// @Router       /pager [get]
 func (p *productController) GetAllByPage(ctx *gin.Context) {
 	page, err := utils.ConverterStrToInt(ctx.DefaultQuery("page", "1"))
 	if err != nil {
@@ -121,7 +110,7 @@ func (p *productController) GetById(ctx *gin.Context) {
 	if product == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "Product is not found",
+			"error":   "Produto não encontrado",
 		})
 		return
 	}
@@ -154,7 +143,7 @@ func (p *productController) DeleteById(ctx *gin.Context) {
 	if product == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "Product is not found",
+			"error":   "Produto não encontrado",
 		})
 		return
 	}
@@ -197,7 +186,7 @@ func (p *productController) Update(ctx *gin.Context) {
 	if product == nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"success": false,
-			"error":   "Product is not found",
+			"error":   "Produto não encontrado",
 		})
 		return
 	}

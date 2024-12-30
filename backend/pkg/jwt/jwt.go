@@ -32,7 +32,7 @@ func GenerateJWT(user *models.User) (string, error) {
 func ParseJWT(tokenString string) (*jsonWebToken.Token, error) {
 	token, err := jsonWebToken.Parse(tokenString, func(token *jsonWebToken.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jsonWebToken.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+			return nil, fmt.Errorf("método de assinatura incorreto: %v", token.Header["alg"])
 		}
 
 		return jwtSecret, nil
