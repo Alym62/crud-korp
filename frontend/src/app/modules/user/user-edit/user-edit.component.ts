@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { User } from '@shared/models/user.model';
+import { AuthService } from '@shared/services/auth.service';
 import { UserService } from '@shared/services/user.service';
 
 @Component({
@@ -24,6 +26,8 @@ export class UserEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: User,
     private service: UserService,
     private _dialogRef: MatDialogRef<UserEditComponent>,
+    private router: Router,
+    private authService: AuthService,
   ) {
     this.createForm();
   }
@@ -32,7 +36,7 @@ export class UserEditComponent implements OnInit {
     this.isNew = !!this.data ? false : true;
     if (!this.isNew) {
       this.user = this.data;
-      this.formGroup.patchValue(this.data);
+      this.formGroup.patchValue({ ...this.data, role: this.data.role });
     }
   }
 
@@ -41,7 +45,8 @@ export class UserEditComponent implements OnInit {
       email: [null, Validators.required],
       password: [null, Validators.required],
       position: [null],
-      role: [null, Validators.required]
+      roleManager: [null],
+      roleSeller: [null],
     });
     this.formGroup.valueChanges.subscribe(value => {
       Object.assign(this.user, value);
@@ -49,17 +54,14 @@ export class UserEditComponent implements OnInit {
   }
 
   onRoleChange(selectedRole: string): void {
-    if (!selectedRole) {
-      this.isManagerSelected = false;
-      this.isSellerSelected = false;
-    } else if (selectedRole === 'manager') {
+    if (selectedRole === 'manager') {
       this.isManagerSelected = true;
       this.isSellerSelected = false;
-      this.formGroup.get('role')?.setValue('manager');
+      this.formGroup.get('roleManager')?.setValue(selectedRole);
     } else if (selectedRole === 'seller') {
       this.isManagerSelected = false;
       this.isSellerSelected = true;
-      this.formGroup.get('role')?.setValue('seller');
+      this.formGroup.get('roleSeller')?.setValue(selectedRole);
     }
   }
 
@@ -69,17 +71,22 @@ export class UserEditComponent implements OnInit {
       return;
     }
 
+    let role = this.isManagerSelected ? this.formGroup.get('roleManager')?.value : this.formGroup.get('roleSeller')?.value;
+
+    const userSaveOrUpdate = { ...this.formGroup.value, role: role }
     if (this.isNew) {
-      this.service.create(this.formGroup.value).subscribe({
+      this.service.create(userSaveOrUpdate).subscribe({
         next: (value) => {
           this._dialogRef.close(value.success);
         },
         error: (err) => console.error(err.error),
       });
     } else {
-      this.service.update(this.user.id, this.formGroup.value).subscribe({
+      this.service.update(this.user.id, userSaveOrUpdate).subscribe({
         next: (value) => {
           this._dialogRef.close(value.success);
+          this.authService.logout();
+          this.router.navigate(['/login']);
         },
         error: (err) => console.error(err.error),
       });

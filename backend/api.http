@@ -53,20 +53,10 @@ POST http://localhost:8080/api/v1/user/create
 Content-Type: application/json
 
 {
-    "email": "leiloca@email.com",
+    "email": "korp@email.com",
     "password": "123456",
-    "position": "vendedora",
-    "role": "seller"
-}
-
-###
-PUT http://localhost:8080/api/v1/user/update/4
-Content-Type: application/json
-
-{
-    "name": "O Hobbit - Uma jornada inesperada",
-    "description": "Livro de J.R.R Tolkien",
-    "price": 130.99
+    "position": "Gerente",
+    "role": "manager"
 }
 
 ###
@@ -79,6 +69,6 @@ POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-    "email": "leiloca@email.com",
+    "email": "korp@email.com",
     "password": "123456"
 }

@@ -17,12 +17,12 @@
         <input matInput placeholder="Digite o seu cargo..." formControlName="position">
       </mat-form-field>
       <div class="role-selection">
-        <mat-slide-toggle color="primary" class="custom-toggle" formControlName="role"
-          (change)="onRoleChange('manager')" [checked]="isManagerSelected">
+        <mat-slide-toggle color="primary" formControlName="roleManager" (change)="onRoleChange('manager')"
+          [checked]="isManagerSelected">
           Gerente
         </mat-slide-toggle>
 
-        <mat-slide-toggle color="primary" formControlName="role" (change)="onRoleChange('seller')"
+        <mat-slide-toggle color="primary" formControlName="roleSeller" (change)="onRoleChange('seller')"
           [checked]="isSellerSelected">
           Vendedor
         </mat-slide-toggle>

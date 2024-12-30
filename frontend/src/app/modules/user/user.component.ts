@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
   edit(item: User): void {
     const dialogRef = this._matDialog.open(UserEditComponent, {
       width: '600px',
-      height: '500px',
+      height: '600px',
       data: item,
     });
 

@@ -23,7 +23,7 @@ main {
   .main {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: end;
 
     mat-form-field {
       width: 100%;
@@ -38,6 +38,7 @@ main {
     gap: 1rem;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin-top: 1rem;
 
     .card {
       width: 320px;
