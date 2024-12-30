@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Alym62/crud-korp/internal/dto"
+	"github.com/Alym62/crud-korp/internal/dto/product"
 	"github.com/Alym62/crud-korp/internal/usecases"
 	"github.com/Alym62/crud-korp/pkg/utils"
 	"github.com/gin-gonic/gin"
@@ -64,7 +64,7 @@ func (p *productController) GetList(ctx *gin.Context) {
 }
 
 func (p *productController) Create(ctx *gin.Context) {
-	var dto dto.CreateProductDto
+	var dto product.CreateProductDto
 	if err := ctx.ShouldBindJSON(&dto); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
@@ -155,7 +155,7 @@ func (p *productController) DeleteById(ctx *gin.Context) {
 }
 
 func (p *productController) Update(ctx *gin.Context) {
-	var dto dto.UpdateProductDto
+	var dto product.UpdateProductDto
 
 	if err := ctx.ShouldBindJSON(&dto); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{

@@ -42,3 +42,7 @@
     }
   }
 }
+
+::ng-deep .custom-snackbar {
+  --mdc-snackbar-container-color: #2B485A !important;
+}

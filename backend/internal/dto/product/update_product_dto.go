@@ -1,4 +1,4 @@
-package dto
+package product
 
 type UpdateProductDto struct {
 	Name        string  `json:"name" binding:"required"`

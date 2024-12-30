@@ -1,8 +1,8 @@
-package dto
+package user
 
 import "github.com/Alym62/crud-korp/internal/models"
 
-type UpdateUserDto struct {
+type CreateUserDto struct {
 	Email    string      `json:"email" binding:"required"`
 	Password string      `json:"password" binding:"required"`
 	Position string      `json:"position"`

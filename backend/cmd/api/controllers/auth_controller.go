@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Alym62/crud-korp/internal/dto"
+	"github.com/Alym62/crud-korp/internal/dto/auth"
 	"github.com/Alym62/crud-korp/internal/usecases"
 	"github.com/Alym62/crud-korp/pkg/jwt"
 	"github.com/gin-gonic/gin"
@@ -20,7 +20,7 @@ func NewAuthController(useCase usecases.AuthUseCase) authController {
 }
 
 func (ac *authController) Login(ctx *gin.Context) {
-	var d dto.LoginDto
+	var d auth.LoginDto
 	if err := ctx.ShouldBindJSON(&d); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
@@ -65,8 +65,8 @@ func (ac *authController) Login(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
-		"data": dto.ResponseAuth{
-			CurrentUser: dto.CurrentUserResponse{
+		"data": auth.ResponseAuth{
+			CurrentUser: auth.CurrentUserResponse{
 				ID:       user.ID,
 				Email:    user.Email,
 				Position: user.Position,

@@ -1,4 +1,4 @@
-package dto
+package auth
 
 import "github.com/Alym62/crud-korp/internal/models"
 

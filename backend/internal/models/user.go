@@ -63,7 +63,7 @@ func (u *User) isValid() error {
 	}
 
 	if len(u.Password) < 6 {
-		return fmt.Errorf("a senha não pode ter um tamanho menor que 6 %d", len(u.Password))
+		return fmt.Errorf("a senha não pode ter um tamanho menor que 6")
 	}
 
 	if u.Role == "" {

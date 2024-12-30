@@ -1,4 +1,4 @@
-package dto
+package auth
 
 type ResponseAuth struct {
 	CurrentUser CurrentUserResponse `json:"currentUser"`

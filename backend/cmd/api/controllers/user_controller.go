@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Alym62/crud-korp/internal/dto"
+	"github.com/Alym62/crud-korp/internal/dto/user"
 	"github.com/Alym62/crud-korp/internal/usecases"
 	"github.com/Alym62/crud-korp/pkg/utils"
 	"github.com/gin-gonic/gin"
@@ -20,7 +20,7 @@ func NewUserController(useCase usecases.UserUseCase) userController {
 }
 
 func (u *userController) Create(ctx *gin.Context) {
-	var dto dto.CreateUserDto
+	var dto user.CreateUserDto
 	if err := ctx.ShouldBindJSON(&dto); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"success": false,
@@ -111,7 +111,7 @@ func (u *userController) DeleteById(ctx *gin.Context) {
 }
 
 func (u *userController) Update(ctx *gin.Context) {
-	var dto dto.UpdateUserDto
+	var dto user.UpdateUserDto
 
 	if err := ctx.ShouldBindJSON(&dto); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{

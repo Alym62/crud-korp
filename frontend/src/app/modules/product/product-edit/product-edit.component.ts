@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '@shared/models/product.model';
 import { ProductService } from '@shared/services/product.service';
 
@@ -21,6 +22,7 @@ export class ProductEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Product,
     private service: ProductService,
     private _dialogRef: MatDialogRef<ProductEditComponent>,
+    private _snackBar: MatSnackBar,
   ) {
     this.createForm();
   }
@@ -44,6 +46,15 @@ export class ProductEditComponent implements OnInit {
     });
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      duration: 5000,
+      panelClass: ['custom-snackbar'],
+    });
+  }
+
   saveOrUpdate(): void {
     if (!this.formGroup.valid) {
       this.formGroup.markAllAsTouched();
@@ -55,14 +66,14 @@ export class ProductEditComponent implements OnInit {
         next: (value) => {
           this._dialogRef.close(value.success);
         },
-        error: (err) => console.error(err.error),
+        error: (err) => this.openSnackBar(err.error.error, 'x'),
       });
     } else {
       this.service.update(this.product.id, this.formGroup.value).subscribe({
         next: (value) => {
           this._dialogRef.close(value.success);
         },
-        error: (err) => console.error(err.error),
+        error: (err) => this.openSnackBar(err.error.error, 'x'),
       });
     }
   }

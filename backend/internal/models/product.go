@@ -35,15 +35,15 @@ func NewProduct(name string, description string, price float64) (*Product, error
 
 func (p *Product) isValid() error {
 	if len(p.Name) < 5 {
-		return fmt.Errorf("o nome não pode ter o tamanho menor que 5 %d", len(p.Name))
+		return fmt.Errorf("o nome não pode ter o tamanho menor que 5")
 	}
 
 	if len(p.Description) < 10 {
-		return fmt.Errorf("a descrição não pode ter um tamanho menor que 10 %d", len(p.Description))
+		return fmt.Errorf("a descrição não pode ter um tamanho menor que 10")
 	}
 
 	if p.Price <= 0 {
-		return fmt.Errorf("o preço não pode ter um valor menor ou igual a zero %f", p.Price)
+		return fmt.Errorf("o preço não pode ter um valor menor ou igual a zero")
 	}
 
 	return nil
