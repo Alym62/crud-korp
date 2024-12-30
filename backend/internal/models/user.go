@@ -59,15 +59,15 @@ func (u *User) isValid() error {
 	regexEmail := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 
 	if !regexEmail.MatchString(u.Email) {
-		return fmt.Errorf("invalid email format: %s", u.Email)
+		return fmt.Errorf("formato de e-mail inválido: %s", u.Email)
 	}
 
 	if len(u.Password) < 6 {
-		return fmt.Errorf("password must be at least 10 characters, got %d", len(u.Password))
+		return fmt.Errorf("a senha não pode ter um tamanho menor que 6 %d", len(u.Password))
 	}
 
 	if u.Role == "" {
-		return fmt.Errorf("role is not blank")
+		return fmt.Errorf("a permissão não pode ser vazia")
 	}
 
 	return nil
